@@ -5,13 +5,16 @@ const stemInfo = {
   vocals: { label: 'Vocals', note: 'The voice, front and center', color: 'violet', icon: '◖' },
   drums: { label: 'Drums', note: 'The pulse that moves it all', color: 'orange', icon: '▦' },
   bass: { label: 'Bass', note: 'The low end, loud and clear', color: 'blue', icon: '≋' },
-  other: { label: 'Other instruments', note: 'Guitars, keys, and more', color: 'green', icon: '✳' },
+  guitar: { label: 'Guitar', note: 'Guitar parts identified by the model', color: 'green', icon: '⌁' },
+  piano: { label: 'Piano', note: 'Piano parts identified by the model', color: 'violet', icon: '▥' },
+  other: { label: 'Other instruments', note: 'The model’s unclassified accompaniment', color: 'orange', icon: '✳' },
+  instrumental: { label: 'Instrumental mix', note: 'Combined non-vocal stems', color: 'blue', icon: '♫' },
 };
 let pollTimer;
 
 function chooseFile(file) {
   if (!file) return;
-  if (!file.type.startsWith('audio/') && !/\.(mp3|wav|flac|m4a|ogg|aiff?|)$/i.test(file.name)) {
+  if (!file.type.startsWith('audio/') && !/\.(mp3|wav|flac|m4a|ogg|aiff?)$/i.test(file.name)) {
     showError('That does not look like an audio file. Try an MP3, WAV, FLAC, M4A, OGG, or AIFF.');
     return;
   }
@@ -38,7 +41,7 @@ async function upload(file) {
     const response = await fetch('/api/separate', { method: 'POST', body: form });
     const data = await response.json();
     if (!response.ok) throw new Error(data.detail || 'Could not start the separation.');
-    document.querySelector('#trackMeta').textContent = `${formatBytes(file.size)} · Separation running`;
+    document.querySelector('#trackMeta').textContent = `${formatBytes(file.size)} · Six-stem separation running`;
     setProgress(10, 'Finding the layers in your song…');
     poll(data.job_id);
   } catch (error) {
@@ -53,13 +56,13 @@ async function poll(jobId) {
     if (!response.ok) throw new Error(job.detail || 'Could not check the separation status.');
     if (job.status === 'complete') {
       setProgress(100, 'Your stems are ready.');
-      document.querySelector('#trackMeta').textContent = 'Separation complete';
+      document.querySelector('#trackMeta').textContent = 'Separation complete · 7 tracks';
       document.querySelector('#progressBlock').classList.add('hidden');
       renderStems(job.stems);
       return;
     }
     if (job.status === 'error') throw new Error(job.error || 'Separation did not finish.');
-    setProgress(job.status === 'queued' ? 12 : 35, job.status === 'queued' ? 'Waiting to start…' : 'Separating your track…');
+    setProgress(job.progress || (job.status === 'queued' ? 8 : 20), job.status === 'queued' ? 'Waiting to start…' : 'Separating your track… This can take several minutes.');
     pollTimer = setTimeout(() => poll(jobId), 2500);
   } catch (error) {
     showError(error.message || 'Something went wrong while checking the job.');
