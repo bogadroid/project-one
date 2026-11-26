@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101016">
+  <meta name="description" content="Separate a song into vocals, drums, bass, and accompaniment with StemStudio.">
+  <title>StemStudio — Hear every layer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="StemStudio home"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>stem<span class="brand-light">studio</span></span></a>
+      <div class="topbar-note"><span class="status-dot"></span> LOCAL AUDIO PROCESSING</div>
+      <a class="github-link" href="https://github.com/bogadroid/project-one" target="_blank" rel="noreferrer">Made for music makers <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="eyebrow"><span class="eyebrow-line"></span> YOUR SONG, UNLAYERED</div>
+        <h1>Hear every <span>layer.</span></h1>
+        <p class="hero-copy">Pull vocals, drums, bass, and everything else from a song.<br class="desktop-break"> Your next idea is already in there.</p>
+
+        <div class="workspace">
+          <div class="upload-card" id="uploadCard">
+            <div class="upload-orb" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 32V10m0 0-8 8m8-8 8 8M12 29v8a3 3 0 0 0 3 3h18a3 3 0 0 0 3-3v-8"/></svg></div>
+            <h2>Drop a track to get started</h2>
+            <p>or <button class="text-button" id="browseButton" type="button">browse files</button> from your device</p>
+            <div class="file-types"><span>MP3</span><span>WAV</span><span>FLAC</span><span>M4A</span><span>OGG</span><span>AIFF</span><span class="file-size">UP TO 100 MB</span></div>
+            <input id="fileInput" type="file" accept="audio/*,.aiff,.aif" hidden>
+          </div>
+          <div class="privacy-note"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5 2.5 4v3.7c0 3.2 2.3 5.7 5.5 6.8 3.2-1.1 5.5-3.6 5.5-6.8V4L8 1.5Zm-2.4 6.6 1.6 1.6 3.3-3.4"/></svg> Your audio stays on this machine. Nothing is uploaded to a cloud service.</div>
+          </div>
+
+          <section class="job-panel hidden" id="jobPanel" aria-live="polite">
+            <div class="track-row">
+              <div class="track-icon"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18c0 1.1-1.3 2-3 2s-3-.9-3-2 1.3-2 3-2 3 .9 3 2Zm12-2c0 1.1-1.3 2-3 2s-3-.9-3-2 1.3-2 3-2 3 .9 3 2Z"/></svg></div>
+              <div class="track-info"><strong id="trackName">Your track</strong><span id="trackMeta">Preparing audio…</span></div>
+              <button class="icon-button" id="removeButton" aria-label="Choose another track" title="Choose another track">×</button>
+            </div>
+            <div class="progress-block" id="progressBlock">
+              <div class="progress-label"><span id="progressText">Getting things ready…</span><span class="progress-percent" id="progressPercent">0%</span></div>
+              <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+              <p class="progress-hint" id="progressHint">The first run may take longer while the model is downloaded.</p>
+            </div>
+            <div class="error-box hidden" id="errorBox"></div>
+            <div id="stemsSection" class="stems-section hidden">
+              <div class="stems-heading"><div><span class="eyebrow-small">YOUR SEPARATED TRACKS</span><h2>Four ways to listen.</h2></div><span class="ready-badge"><i></i> READY</span></div>
+              <div class="stem-list" id="stemList"></div>
+              <button class="another-button" id="anotherButton" type="button">Separate another track <span>↗</span></button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="how-section">
+        <div class="section-title"><span class="eyebrow-small">A LITTLE BIT OF STUDIO MAGIC</span><h2>Three steps. All the stems.</h2></div>
+        <div class="steps-grid">
+          <article class="step"><div class="step-number">01</div><div class="step-icon">↑</div><h3>Choose your song</h3><p>Drop in an audio file from your device. We support all the usual formats.</p></article>
+          <article class="step"><div class="step-number">02</div><div class="step-icon wave-icon">∿</div><h3>Let it separate</h3><p>Our Demucs-powered model picks apart the mix into four distinct layers.</p></article>
+          <article class="step"><div class="step-number">03</div><div class="step-icon">♫</div><h3>Make it yours</h3><p>Listen to each stem on its own and download the tracks you want to remix.</p></article>
+        </div>
+      </section>
+    </main>
+    <footer><a class="brand footer-brand" href="/" aria-label="StemStudio home"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>stem<span class="brand-light">studio</span></span></a><span>Made for the love of the layers.</span><span class="footer-model">POWERED BY DEMUCS · HTDEMUCS</span></footer>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

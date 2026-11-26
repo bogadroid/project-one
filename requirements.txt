@@ -1,0 +1,5 @@
+fastapi>=0.110,<1.0
+uvicorn[standard]>=0.27,<1.0
+python-multipart>=0.0.9
+# Demucs and PyTorch perform the actual local audio source separation.
+demucs>=4.0.1
